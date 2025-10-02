@@ -148,7 +148,7 @@ function Get-GitChangedFile {
     $Path = (Resolve-Path $Path).Path
     try
     {
-        $GitPathRaw = Invoke-Git rev-parse --no-pager --show-toplevel -Path $Path -ErrorAction Stop
+        $GitPathRaw = Invoke-Git --no-pager rev-parse --show-toplevel -Path $Path -ErrorAction Stop
     }
     catch
     {
@@ -197,7 +197,7 @@ function Get-GitChangedFile {
         return
     }
 
-    [string[]]$Files = Invoke-Git "diff --no-pager --name-only $revisionString" -Path $GitPath
+    [string[]]$Files = Invoke-Git "--no-pager diff --name-only $revisionString" -Path $GitPath
     if ($Files) {
         Write-Verbose "Found [$($Files.Count)] files with raw values:`n$($Files | Foreach-Object {"'$_'"} | Out-String)"
         if($Include)

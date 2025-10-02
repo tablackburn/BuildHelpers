@@ -146,7 +146,7 @@ function Get-BuildVariable {
         {
             # Using older than 1.6.3 in your build system? Yuck
             # Thanks to earl: http://stackoverflow.com/a/1418022/3067642
-            $BuildBranch = Invoke-Git @IGParams -Arguments "rev-parse --no-pager --abbrev-ref HEAD"
+            $BuildBranch = Invoke-Git @IGParams -Arguments "--no-pager rev-parse --abbrev-ref HEAD"
         }
     }
 
@@ -160,21 +160,21 @@ function Get-BuildVariable {
         'CI_COMMIT_SHA' {
             if($WeCanGit)
             {
-                Invoke-Git @IGParams -Arguments "log --no-pager --format=%B -n 1 $( (Get-Item -Path "ENV:$_").Value )"
+                Invoke-Git @IGParams -Arguments "--no-pager log --format=%B -n 1 $( (Get-Item -Path "ENV:$_").Value )"
                 break
             } # Gitlab 9.0+ - thanks to mipadi http://stackoverflow.com/a/3357357/3067642
         }
         'CI_BUILD_REF' {
             if($WeCanGit)
             {
-                Invoke-Git @IGParams -Arguments "log --no-pager --format=%B -n 1 $( (Get-Item -Path "ENV:$_").Value )"
+                Invoke-Git @IGParams -Arguments "--no-pager log --format=%B -n 1 $( (Get-Item -Path "ENV:$_").Value )"
                 break
             } # Gitlab 8.x - thanks to mipadi http://stackoverflow.com/a/3357357/3067642
         }
         'GIT_COMMIT' {
             if($WeCanGit)
             {
-                Invoke-Git @IGParams -Arguments "log --no-pager --format=%B -n 1 $( (Get-Item -Path "ENV:$_").Value )"
+                Invoke-Git @IGParams -Arguments "--no-pager log --format=%B -n 1 $( (Get-Item -Path "ENV:$_").Value )"
                 break
             } # Jenkins - thanks to mipadi http://stackoverflow.com/a/3357357/3067642
         }
@@ -186,21 +186,21 @@ function Get-BuildVariable {
         'BUILD_SOURCEVERSION' { #Azure Pipelines, this will be triggered in the case of a classic release pipeline
             if($WeCanGit)
             {
-                Invoke-Git @IGParams -Arguments "log --no-pager --format=%B -n 1 $( (Get-Item -Path "ENV:$_").Value )"
+                Invoke-Git @IGParams -Arguments "--no-pager log --format=%B -n 1 $( (Get-Item -Path "ENV:$_").Value )"
                 break
             } # Azure Pipelines Classic Release (https://docs.microsoft.com/en-us/azure/devops/pipelines/release/variables)
         }
         'BUILD_VCS_NUMBER' {
             if($WeCanGit)
             {
-                Invoke-Git @IGParams -Arguments "log --no-pager --format=%B -n 1 $( (Get-Item -Path "ENV:$_").Value )"
+                Invoke-Git @IGParams -Arguments "--no-pager log --format=%B -n 1 $( (Get-Item -Path "ENV:$_").Value )"
                 break
             } # Teamcity https://confluence.jetbrains.com/display/TCD10/Predefined+Build+Parameters
         }
         'BAMBOO_REPOSITORY_REVISION_NUMBER' {
             if($WeCanGit)
             {
-                Invoke-Git @IGParams -Arguments "log --no-pager --format=%B -n 1 $( (Get-Item -Path "ENV:$_").Value )"
+                Invoke-Git @IGParams -Arguments "--no-pager log --format=%B -n 1 $( (Get-Item -Path "ENV:$_").Value )"
                 break
             } # Bamboo https://confluence.atlassian.com/bamboo/bamboo-variables-289277087.html
         }
@@ -211,7 +211,7 @@ function Get-BuildVariable {
         'GITHUB_SHA' {
             if($WeCanGit)
             {
-                Invoke-Git @IGParams -Arguments "log --no-pager --format=%B -n 1 $( (Get-Item -Path "ENV:$_").Value )"
+                Invoke-Git @IGParams -Arguments "--no-pager log --format=%B -n 1 $( (Get-Item -Path "ENV:$_").Value )"
                 break
             } # GitHub Actions https://developer.github.com/actions/creating-github-actions/accessing-the-runtime-environment/#environment-variables
         }
@@ -221,7 +221,7 @@ function Get-BuildVariable {
     {
         if($WeCanGit)
         {
-            $CommitMessage = Invoke-Git @IGParams -Arguments "log --no-pager --format=%B -n 1"
+            $CommitMessage = Invoke-Git @IGParams -Arguments "--no-pager log --format=%B -n 1"
         }
     }
     if($CommitMessage) {$CommitMessage = $CommitMessage -join "`n"}
@@ -243,7 +243,7 @@ function Get-BuildVariable {
     {
         if($WeCanGit)
         {
-            $CommitHash = Invoke-Git @IGParams -Arguments "log --no-pager --format=%H -n 1"
+            $CommitHash = Invoke-Git @IGParams -Arguments "--no-pager log --format=%H -n 1"
         }        
     }
     # Build number

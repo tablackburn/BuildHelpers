@@ -110,7 +110,7 @@ function Get-ProjectName
         #Last ditch, are you in Azure Pipelines or another CI that checks into a folder unrelated to the project?
         #let's try some git
         elseif ( $WeCanGit ) {
-            $result = (Invoke-Git -Path $Path -GitPath $GitPath -Arguments "remote --no-pager get-url origin").Split('/')[-1] -replace "\.git",""
+            $result = (Invoke-Git -Path $Path -GitPath $GitPath -Arguments "--no-pager remote get-url origin").Split('/')[-1] -replace "\.git",""
         }
         else
         {
